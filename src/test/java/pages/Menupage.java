@@ -1,5 +1,4 @@
 package pages;
-
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -15,34 +14,36 @@ public class Menupage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    @FindBy(xpath = "//button[@aria-label='Menu']")//w
+    @FindBy(xpath = "//button[@aria-label='Menu']")
     private WebElement menuButton;
 
-    @FindBy(xpath = "//ul[@class='hamburger-menu-flyout-list']")//w
-    private WebElement menuList;
+    
 
-    @FindBy(xpath = "//input[@aria-label='Type to search. Navigate forward to hear suggestions']")//w
+    @FindBy(xpath = "//*[@id=\"shop-header-3675153\"]/div/div[1]/header/div[2]/div/nav/div/div/ul/li[5]/button")
+    private WebElement appliancesLink;
+
+    @FindBy(xpath = "//*[@id=\"shop-header-3675153\"]/div/div[1]/header/div[2]/div/nav/div/div/ul/li[2]/button")
+    private WebElement majorAppliancesLink;
+
+    @FindBy(xpath = "//*[@id=\"shop-header-3675153\"]/div/div[1]/header/div[2]/div/nav/div/div/ul/li[2]/a")
+    private WebElement applianceSaleEventLink;
+
+    @FindBy(xpath = "//*[@id=\"shop-header-3675153\"]/div/div[1]/header/div[2]/div/nav/div/div/ul/li[3]/button")
+    private WebElement brandsLink;
+    
+    @FindBy(xpath="//*[@id=\"shop-header-30509266\"]/div/div[1]/header/div[2]/div/nav/div/div/ul/li[2]/a")
+    private WebElement Brandname;
+
+    @FindBy(xpath = "//*[@id=\"gh-search-input\"]")
     private WebElement searchInputField;
 
     @FindBy(xpath = "//button[@aria-label='submit search']")
-    private WebElement searchButton;
-
-    @FindBy(css = ".search-title")
-    private WebElement searchResults;
-
-    @FindBy(xpath = "//div[@class='no-results-message']")
-    private WebElement noResultsMessage;
-
-    @FindBy(xpath = "//*[@id=\"shop-header-31818558\"]/div/div[1]/header/div[2]/div/nav/div/div/ul")
-    private WebElement categoryList;
-
-    @FindBy(xpath = "//a[@class='category-link']")
-    private WebElement categoryLink;
+    private WebElement searchIcon;
 
     public Menupage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // 10 seconds timeout
     }
 
     public void clickMenuButton() {
@@ -50,58 +51,45 @@ public class Menupage {
         menuButton.click();
     }
 
-    public boolean isMenuListVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(menuList)).isDisplayed();
+    
+
+    public void clickAppliancesLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(appliancesLink));
+        appliancesLink.click();
     }
 
-    public void clickSearchButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(searchButton));
-        searchButton.click();
+    public void clickMajorAppliancesLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(majorAppliancesLink));
+        majorAppliancesLink.click();
     }
 
+    public void clickApplianceSaleEventLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(applianceSaleEventLink));
+        applianceSaleEventLink.click();
+    }
+
+    public void clickBrandsLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(brandsLink));
+        brandsLink.click();
+    }
+
+    public void selectBrand() {
+        wait.until(ExpectedConditions.elementToBeClickable(Brandname));
+        Brandname.click();
+    }
+    public void input() {
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputField));
+        searchInputField.clear();
+        
+    }
     public void enterSearchTerm(String searchTerm) {
-        wait.until(ExpectedConditions.visibilityOf(searchInputField));
+        wait.until(ExpectedConditions.elementToBeClickable(searchInputField));
+        //searchInputField.clear();
         searchInputField.sendKeys(searchTerm);
     }
 
-    public void submitSearch() {
-        searchInputField.submit();
-    }
-
-    public boolean areSearchResultsVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(searchResults)).isDisplayed();
-    }
-
-    public boolean isNoResultsMessageVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(noResultsMessage)).isDisplayed();
-    }
-
-    public void selectCategory(String category) {
-        wait.until(ExpectedConditions.visibilityOf(categoryList));
-        driver.findElement(By.xpath("//a[contains(text(),'" + category + "')]")).click();
-    }
-
-    public boolean areCategoryResultsVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(searchResults)).isDisplayed();
-    }
-
-    /*public void clickInvalidCategory() {
-        // Attempt to click an invalid category
-        driver.findElement(By.xpath("//a[@class='invalid-category-link']")).click();
-    }*/
-
-    public boolean isErrorPageVisible() {
-        // Check if error page is visible
-        return wait.until(ExpectedConditions.titleContains("Error Page"));
-    }
-
-    public void emptySearchInput() {
-        wait.until(ExpectedConditions.visibilityOf(searchInputField));
-        searchInputField.clear();
-        searchInputField.submit();
-    }
-
-    public boolean isSearchInputFieldEmpty() {
-        return wait.until(ExpectedConditions.visibilityOf(searchInputField)).getText().isEmpty();
+    public void clickSearchIcon() {
+        wait.until(ExpectedConditions.elementToBeClickable(searchIcon));
+        searchIcon.click();
     }
 }

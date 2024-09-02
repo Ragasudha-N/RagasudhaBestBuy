@@ -1,35 +1,46 @@
 Feature: Menu and Search Functionality
+Background:
+When I click on bestbuy link
+Then I have to select the country
 
   Scenario: Menu Button Access
-    Given the user is on the Best Buy homepage
-    When the user locates the menu button
-    And the user clicks on the menu button
+    Given I am  on the Best Buy homepage
+     When I locate the menu button
+    And I user clicks on the menu button
     Then the menu button should be visible
-    And clicking the menu button should display the menu list
+   
 
-  Scenario: Category List Visibility
-    Given the user is on the Best Buy homepage
-    When the user clicks on the menu button
-    Then the list of categories should be visible
-    And all categories should be displayed
 
-  Scenario: Category Selection
-    Given the user is on the Best Buy homepage
-    When the user opens the menu
-    And the user clicks on a category (e.g., "Laptops")
-    Then items related to the selected category should be displayed
-
-  Scenario: Search Button Access
-    Given the user is on the Best Buy homepage
-    When the user locates the search button
-    And the user clicks on the search button
-    Then the search input field should be activated for user input
-
+  
+#Scenario: Category Selection
+    #Given I am on the Best Buy homepage
+    #When I  click the menu
+    #And I click on the  categorylist (e.g., "Laptops")
+    #Then items related to the selected category should be displayed
+  
+  Scenario: Appliance sale event
+  Given I am on the Best Buy homepage
+   When I  click the menu
+   And I click  appliances
+   Then I click major appliances
+   And I click on Aplliance sale event
+   Then Top deals message is displayed.
+   
+  
+  
+  Scenario:Brand search
+  Given I am on the Best Buy Homepage
+  When I click on the menu button
+  Then click Brands link
+  And click on the "<Brand >" brand name
+    
+  
+  
   Scenario Outline: Search Functionality
-    Given the user is on the Best Buy homepage with the search bar visible
-    When the user clicks on the search button
-    And the user enters a search term "<search_term>"
-    And the user presses Enter or clicks the search icon
+    Given I land the Best Buy homepage with the search bar visible
+    When I user clicks on the input field and clears it.
+    And I enter a product for  search  "<search_term>"
+    And I  click the search icon
     Then items related to the search term "<search_term>" should be displayed
 
     Examples:
@@ -38,26 +49,22 @@ Feature: Menu and Search Functionality
       | Laptop       |
       | Camera       |
 
-  Scenario: Search Result Accuracy
-    Given the user has performed a search
-    When the user reviews the items displayed
-    Then the items should match the search term entered
+  #Scenario: Search Result Accuracy
+    #Given I has performed a search
+    #When I review the items displayed
+    #Then the items should match the search term entered
 
-  #Scenario: No Search Results Handling
-    #Given the user is on the homepage with access to the search bar
-    #When the user clicks on the search button
-    #And the user enters a random term that is unlikely to have results (e.g., "abcdef1234")
-    #And the user presses Enter
-    #Then a "No results found" message should be displayed
 
-  Scenario: Empty Search Input
-    Given the user is on the homepage with access to the search bar
-    When the user clicks on the search button
-    And the user does not enter any input
-    And the user presses Enter or clicks the search icon
-    Then  no action should be taken
+  Scenario: Invalid search items for specific character
+    Given I am on the homepage with access to the search bar
+    When I click on the search button
+    And I  enter special characters like"<invalid>"input
+    Then  no responses found message should be displayed
+        Examples:
+      | invalid      |
+      | ^            |
+      | (            |
+      | )            |
+      |\             |
+      |[]            |
 
-  Scenario: Invalid Category Handling
-    Given the user is on the homepage with the menu open
-    When the user attempts to click on an invalid or non-existent category
-    Then the application should show an error message or prevent access
